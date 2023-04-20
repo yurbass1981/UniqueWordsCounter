@@ -1,4 +1,6 @@
 ﻿using System;
+using UniqueWordsCounter.Services;
+using UniqueWordsCounter.Services.Impl;
 
 class Program
 {
@@ -11,31 +13,8 @@ class Program
         var resultFilePath = ReadFilePathAndValidate();
 
 
-        var keyValuePairs = new Dictionary<string, int>();
-        var lines = File.ReadLines(filePath);
-
-        foreach (var line in lines)
-        {
-            var words = line.Split(new char[] { ' ', ',', '.', '!', '?', ':', ';', '-' },
-                StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
-            {
-                if (!keyValuePairs.ContainsKey(word))
-                {
-                    keyValuePairs.Add(word, 1);
-                }
-                else
-                {
-                    keyValuePairs[word]++;
-                }
-            }
-        }
-
-        using var sw = new StreamWriter(resultPath);
-        foreach (var row in keyValuePairs.OrderByDescending(x => x.Value))
-        {
-            sw.WriteLine($"{row.Key}, {row.Value}");
-        }
+        IAppService appService = new AppService();
+        appService.Run(filePath, resultFilePath);
 
         Console.ReadKey();
     }
