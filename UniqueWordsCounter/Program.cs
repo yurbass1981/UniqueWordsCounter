@@ -1,5 +1,4 @@
-﻿using System;
-using UniqueWordsCounter.Services;
+﻿using UniqueWordsCounter.Services;
 using UniqueWordsCounter.Services.Impl;
 
 class Program
