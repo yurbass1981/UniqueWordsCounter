@@ -28,6 +28,8 @@ class Program
             ReadFilePathAndValidate();
         }
 
+        path = path.Replace("\"", string.Empty);
+
         if (!File.Exists(path))
         {
             Console.WriteLine($"File with path {path} hasn't been found, please try again.");
