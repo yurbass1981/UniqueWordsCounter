@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UniqueWordsCounter.Services.Impl
+﻿namespace UniqueWordsCounter.Services.Impl
 {
-    internal class AppService : IAppService
+    public class AppService : IAppService
     {
         private readonly char[] _separators = { ' ', ',', '.', '!', '?', ':', ';', '-', '*' };
 
@@ -20,8 +14,8 @@ namespace UniqueWordsCounter.Services.Impl
         {
             var uniqueWordsCountMap = new Dictionary<string, int>();
 
-            var lines = File.ReadLines(filePath);
-                
+            var lines = FileParserFactory.GetInstance(filePath).GetLines();
+
 
             foreach (var line in lines)
             {
