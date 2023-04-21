@@ -5,16 +5,24 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Enter input file path: ");
-        var filePath = ReadFilePathAndValidate();
+        try
+        {
+            Console.WriteLine("Enter input file path: ");
+            var filePath = ReadFilePathAndValidate();
 
-        Console.WriteLine("Enter result file path: ");
-        var resultFilePath = ReadFilePathAndValidate();
+            Console.WriteLine("Enter result file path: ");
+            var resultFilePath = ReadFilePathAndValidate();
 
 
-        IAppService appService = new AppService();
-        appService.Run(filePath, resultFilePath);
+            IAppService appService = new AppService();
+            appService.Run(filePath, resultFilePath);
 
+        }
+        catch 
+        {
+            Console.WriteLine("Something went wrong, please try again later.");
+        }
+        
         Console.ReadKey();
     }
 
@@ -22,7 +30,7 @@ class Program
     {
         var path = Console.ReadLine();
 
-        if (string.IsNullOrWhiteSpace(path) || path.IndexOfAny(Path.GetInvalidFileNameChars()) < 0)
+        if (string.IsNullOrWhiteSpace(path))
         {
             Console.WriteLine("File path is incorrect, please try again.");
             ReadFilePathAndValidate();

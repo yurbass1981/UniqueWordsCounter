@@ -6,42 +6,41 @@
 
         public void Run(string filePath, string resultFilePath)
         {
-            var uniqueWordsCountMap = GetUniqueWordsCountMapFromFile(filePath);
-            WriteResultToFile(resultFilePath, uniqueWordsCountMap);
+            var uniqueWords = GetUniqueWords(filePath);
+            WriteResultToFile(resultFilePath, uniqueWords);
         }
 
-        private Dictionary<string, int> GetUniqueWordsCountMapFromFile(string filePath)
+        private Dictionary<string, int> GetUniqueWords(string filePath)
         {
-            var uniqueWordsCountMap = new Dictionary<string, int>();
+            var uniqueWords = new Dictionary<string, int>();
 
             var lines = FileParserFactory.GetInstance(filePath).GetLines();
-
 
             foreach (var line in lines)
             {
                 var words = line.Split(_separators, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var word in words)
                 {
-                    if (!uniqueWordsCountMap.ContainsKey(word))
+                    if (!uniqueWords.ContainsKey(word))
                     {
-                        uniqueWordsCountMap.Add(word, 1);
+                        uniqueWords.Add(word, 1);
                     }
                     else
                     {
-                        uniqueWordsCountMap[word]++;
+                        uniqueWords[word]++;
                     }
                 }
             }
 
-            return uniqueWordsCountMap;
+            return uniqueWords;
         }
 
-        private static void WriteResultToFile(string resultFilePath, Dictionary<string, int> uniqueWordsCountMap)
+        private static void WriteResultToFile(string resultFilePath, Dictionary<string, int> uniqueWords)
         {
             using var sw = new StreamWriter(resultFilePath);
             sw.WriteLine("Word | Count of usage");
 
-            foreach (var row in uniqueWordsCountMap.OrderByDescending(r => r.Value))
+            foreach (var row in uniqueWords.OrderByDescending(r => r.Value))
                 sw.WriteLine($"{row.Key} | {row.Value}");
         }
     }
