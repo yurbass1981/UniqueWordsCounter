@@ -37,7 +37,7 @@
 
         private static void WriteResultToFile(string resultFilePath, Dictionary<string, int> uniqueWords)
         {
-            using var sw = new StreamWriter(resultFilePath);
+            using var sw = new StreamWriter(resultFilePath, false);
             sw.WriteLine("Word | Count of usage");
 
             foreach (var row in uniqueWords.OrderByDescending(r => r.Value))
